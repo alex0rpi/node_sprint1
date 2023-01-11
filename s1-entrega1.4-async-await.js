@@ -65,12 +65,14 @@ const getSalary = (objEmployee) => {
  la seva funció resolve() DESPRES de 2 segons de la seva invocació. */
 
 const asyncf2 = () => {
-  console.log('Promesa pending');
-  return new Promise((resolve, reject) => {
+  let promesa = new Promise((resolve, reject) => {
+    console.log('Crida efectuada');
+    console.log('Promesa pending');
     setTimeout(() => {
-      resolve('Promesa resolta');
+      resolve('Promesa resolta :)');
     }, 2000);
   });
+  return promesa;
 };
 
 const asyncf1 = async () => {
