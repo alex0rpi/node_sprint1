@@ -9,13 +9,14 @@ funcio1('Alex');
 
 // ##### Nivell-2 #####
 // Ex1
-// Mostra per consola el nom i cognoms de l'usuari/ària mitjançant template literals, guardant-los en variables i referenciant-les en la impressió del missatge.
+/* Mostra per consola el nom i cognoms de l'usuari/ària mitjançant template literals, guardant-los en variables
+ i referenciant-les en la impressió del missatge.*/
 const nom = 'Alex';
 const cognom = 'Orpinell';
 console.log(`Hola, em dic ${nom} ${cognom}`);
 
 // Ex2
-// Crea una funció anònima autoinvocable igualada a una variable que mostri per consola el nom de l'usuari/ària a rebut com a paràmetre.
+// Invoca una funció que retorni un valor des de dins d'una template literal.
 function invocame() {
   return '--hola--';
 }
