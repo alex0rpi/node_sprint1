@@ -50,7 +50,7 @@ let salaries = [
 ];
 
 const getEmployee = (id) => {
-  let found; //m'agradaria no necessitar aquesta variable
+  let found = false; //m'agradaria no necessitar aquesta variable
   let promesa = new Promise((resolve, reject) => {
     for (let i in employees) {
       if (employees[i].id === id) {
@@ -65,7 +65,7 @@ const getEmployee = (id) => {
   return promesa;
 };
 
-getEmployee(4)
+getEmployee(2)
   .then((result) => console.log(result))
   .catch((error) => console.log(error));
 
@@ -74,14 +74,15 @@ getEmployee(4)
 paràmetre un objecte employee i retorni el seu salari. */
 
 const getSalary = (objEmployee) => {
-  let trobat; //m'agradaria no necessitar aquesta variable
+  let trobat = false; //m'agradaria no necessitar aquesta variable
   let laPromesa = new Promise((resolve, reject) => {
     for (let i in salaries) {
       if (salaries[i].id === objEmployee.id) {
+        trobat = true;
         resolve({
           message: 'Salary trobat',
           empName: objEmployee.name,
-          Salary: salaries[i].salary,
+          salary: salaries[i].salary,
         });
       }
     }
@@ -96,12 +97,34 @@ getSalary({ id: 2, name: 'Bill Gates' })
   .then((result) => console.log(result))
   .catch((error) => console.log(error));
 
-getSalary({ id: 3, name: 'Jeff Bezos' })
-  .then((result) => console.log(result))
-  .catch((error) => console.log(error));
-
 // Ex3
 /* Invoca la primera funció getEmployee() i després getSalary() niant l'execució de les dues promises de 
 manera que es retorni per la consola el nom de l'empleat/da i el seu salari. */
+
+// let id = 3;
+// getEmployee(id).then((result) => {
+//   let objecteEmployee = {
+//     id:id,
+//     name: result.employeeName,
+//   };
+//   getSalary(objecteEmployee).then((result) => {
+//     console.log({ nomEmpleat: result.empName, salari: result.salary });
+//   });
+// });
+
 // *##### Nivell 3 #####
 // Ex1
+/* Fixa un element catch a la invocació del nivell anterior que capturi qualsevol error i el 
+mostri per la consola. */
+let id = 2;
+getEmployee(id)
+  .then((result) => {
+    let objecteEmployee = {
+      id: id,
+      name: result.employeeName,
+    };
+    getSalary(objecteEmployee).then((result) => {
+      console.log({ nomEmpleat: result.empName, salari: result.salary });
+    });
+  })
+  .catch((error) => console.log(error));
