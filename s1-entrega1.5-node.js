@@ -61,8 +61,8 @@ const frecursiva = () => {
 /*Crea una funció que llisti per la consola el contingut del directori d'usuari/ària de 
 l'ordinador utilizant Node Child Processes.*/
 
-const directory = 'C:/Users/formacio';
-const fs = require('fs');
+// const directory = 'C:/Users/formacio';
+// const fs = require('fs');
 // Sense node child processes seria ↓↓
 // fs.readdir(directory, (err, files) => {
 //   files.forEach((file) => {
@@ -75,16 +75,40 @@ const fs = require('fs');
 // spawn(), fork(), exec(), execFile() --> methods to create a child process in Node.
 /*child_process.exec(): spawns a shell and runs a command within that shell, passing 
 the stdout and stderr to a callback function when complete.*/
-const child_process = require('node:child_process');
-const { stdout, stderr } = require('process');
+// const child_process = require('node:child_process');
+// const { stdout, stderr } = require('process');
 
 // child_process.exec('dir directori_prova', (error, stdout, stderr) => {
 // Amb el directori d'usuari windows/users/formacio
-child_process.exec('dir C:\\Users\\formacio', (error, stdout, stderr) => {
-  if (error) {
-    console.log(`exec error: ${error}`);
-    return;
-  }
-  console.log(`stdour: ${stdout}`);
-  console.error(`stderr: ${stderr}`);
-});
+// child_process.exec('dir C:\\Users\\formacio', function (error, stdout, stderr) {
+//   if (error) {
+//     console.log(`exec error: ${error}`);
+//     return;
+//   }
+//   console.log(`stdour: ${stdout}`);
+//   console.error(`stderr: ${stderr}`);
+// });
+
+// *##### Nivell 3 ##### !Ex1
+/*Crea una funció que creï dos fitxers codificats en hexadecimal i en base64 respectivament, 
+a partir del fitxer del nivell 1.*/
+const fs = require('fs');
+const path = require('path');
+const { Buffer } = require('node:buffer');
+
+const buf = Buffer.from('fitxer1.txt', 'utf-8');
+
+console.log(buf.toString('hex'));
+console.log(buf.toString('base64'));
+
+//!---------------------------------------------------------------
+
+/*Crea una funció que guardi els fitxers del punt anterior, ara encriptats amb l'algoritme 
+aes-192-cbc, i esborri els fitxers inicials.*/
+
+//!---------------------------------------------------------------
+
+/*Crea una altra funció que desencripti i descodifiqui els fitxers de l'apartat anterior 
+tornant a generar una còpia de l'inicial.*/
+
+//!---------------------------------------------------------------
