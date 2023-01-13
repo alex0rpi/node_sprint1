@@ -1,10 +1,10 @@
 // *##### Nivell 1 #####
 // !Ex1---------------------------------------------------------------
 /* Crea una funció que, en executar-la, escrigui una frase en un fitxer. */
-const fs = require('fs');
-const creaFitxer = (nomFitxer, text) => {
-  fs.writeFile(`./fitxers_creats/${nomFitxer}`, text, () => console.log('Fitxer creat'));
-};
+// const fs = require('fs');
+// const creaFitxer = (nomFitxer, text) => {
+//   fs.writeFile(`./fitxers_creats/${nomFitxer}`, text, () => console.log('Fitxer creat'));
+// };
 // creaFitxer('fitxer1.txt', "El Mies es pensa que no sobreviurà a l'hivern");
 /*Es crea un fitxer .txt a la mateixa arrel del repositori.*/
 
@@ -102,7 +102,7 @@ the stdout and stderr to a callback function when complete.*/
 // *##### Nivell 3 ##### !Ex1
 /*Crea una funció que creï dos fitxers codificats en hexadecimal i en base64 respectivament, 
 a partir del fitxer del nivell 1.*/
-const { Buffer } = require('node:buffer');
+// const { Buffer } = require('node:buffer');
 const fitxerInicial = 'fitxer1.txt';
 /*Creo una promesa perquè fs llegeix de manera async, i a createCodedFiles espero a què la retorni.*/
 const readFileContent = (fileName) => {
@@ -128,67 +128,50 @@ const createCodedFiles = async (file) => {
   creaFitxer('fitxerHex.txt', hexContent);
   creaFitxer('fitxerBase64.txt', base64Content);
 };
-createCodedFiles(fitxerInicial);
+// createCodedFiles(fitxerInicial);
 
 //!---------------------------------------------------------------
 
 /*Crea una funció que guardi els fitxers del punt anterior, ara encriptats amb l'algoritme 
   aes-192-cbc, i esborri els fitxers inicials.*/
 
-// const { createCipheriv } = require('node:crypto');
-// const { Buffer } = require('node:buffer');
+const { createCipheriv, randomBytes } = require('node:crypto');
+const { Buffer } = require('node:buffer');
 
-// const esborraFitxer = (fname) => {
-//   const fPath = __dirname + `/fitxers_creats/${fname}`;
-//   fs.unlink(fPath, () => console.log('One file was deleted.'));
-// };
+const esborraFitxer = (fname) => {
+  const fPath = __dirname + `/fitxers_creats/${fname}`;
+  fs.unlink(fPath, () => console.log('One file was deleted.'));
+};
 
-// const fs = require('fs');
-// const creaFitxer = (nomFitxer, text) => {
-//   fs.writeFile(`./fitxers_creats/${nomFitxer}`, text, () => console.log('Fitxer creat'));
-// };
+const fs = require('fs');
+const creaFitxer = (nomFitxer, text) => {
+  fs.writeFile(`./fitxers_creats/${nomFitxer}`, text, () => console.log('Encrypted file created'));
+};
 
-// const encriptaAESiEsborra = async (f1, f2) => {
-//   const algorithm = 'aes-192-cbc';
-//   const password = 'bondia';
-//   /*Aquest algoritme requereix d'una key de 24bytes (192 bits)*/
+const encriptaAESiEsborra = async (f) => {
+  const algorithm = 'aes-192-cbc';
+  /*Aquest algoritme requereix d'una key de 24bytes*/
+  const key = randomBytes(24); // set random initialisation vector
+  /*Googlejant he vist que aes-192-dbd requereix d'un iv de 16 bytes */
+  const iv = randomBytes(16); // set random initialisation vector
 
-//   const contentF1 = (await readFileContent(f1)).toString();
-//   const contentF2 = (await readFileContent(f2)).toString();
-//   const iv1 = Buffer.alloc(24, 0); // set random initialisation vector
-//   const iv2 = Buffer.alloc(24, 0); // set random initialisation vector
-//   /*ENC_KEY and IV can be generated as crypto.randomBytes(32).toString('hex');*/
+  const contentF = (await readFileContent(f)).toString();
 
-//   let cipher1 = createCipheriv(algorithm, contentF1, iv1);
-//   let cipher2 = createCipheriv(algorithm, contentF2, iv2);
+  /*We create an encriptor to be used once for this funcion call*/
+  let cipher = createCipheriv(algorithm, key, iv);
 
-//   let encryptedF1 = '';
-//   let encryptedF2 = '';
+  /*Then, use the encryptor to encript the file content*/
+  let encryptedF = cipher.update(contentF);
 
-//   cipher1.on('readable', () => {
-//     let chunk;
-//     while (null !== (chunk = cipher1.red())) {
-//       encryptedF1 += chunk.toString();
-//     }
-//   });
-//   cipher2.on('readable', () => {
-//     let chunk;
-//     while (null !== (chunk = cipher2.red())) {
-//       encryptedF2 += chunk.toString();
-//     }
-//   });
+  encryptedF = Buffer.concat([encryptedF, cipher.final()]);
 
-//   encryptedF1 = Buffer.concat([encryptedF1, cipher1.final()]);
-//   encryptedF2 = Buffer.concat([encryptedF1, cipher2.final()]);
+  creaFitxer(`${f}-Encrypt.txt`, encryptedF.toString('hex'));
 
-//   creaFitxer('fitxerEncrypt1', encryptedF1);
-//   creaFitxer('fitxerEncrypt2', encryptedF2);
+  // esborraFitxer(f);
+};
 
-//   // esborraFitxer(f1);
-//   // esborraFitxer(f2);
-// };
-
-// encriptaAESiEsborra('fitxerBase64.txt', 'fitxerHex.txt');
+// encriptaAESiEsborra('fitxerHex.txt');
+encriptaAESiEsborra('fitxerBase64.txt');
 
 //!---------------------------------------------------------------
 
