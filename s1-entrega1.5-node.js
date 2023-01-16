@@ -146,15 +146,13 @@ const creaFitxerEncriptat = (nomFitxer, text) => {
   );
 };
 
-let key
-let iv
+let key = '123456789123456789123456'; // initialisation vector
+let iv = '1234567891234567'; // initialisation vector
 
 const encriptaAESiEsborra = async (f) => {
   const algorithm = 'aes-192-cbc';
   /*Aquest algoritme requereix d'una key de 24bytes*/
-  key = randomBytes(24); // set random initialisation vector
-  iv = randomBytes(16); // set random initialisation vector
-  console.log(key)
+  console.log(key);
 
   const contentF = (await readFileContent(f)).toString();
   // console.log(contentF);
@@ -178,28 +176,27 @@ const encriptaAESiEsborra = async (f) => {
   return { FitxerEncriptat, key, iv };
 };
 
-encriptaAESiEsborra('fitxerHex.txt');
-encriptaAESiEsborra('fitxerBase64.txt');
+// encriptaAESiEsborra('fitxerHex.txt');
+// encriptaAESiEsborra('fitxerBase64.txt');
 //!---------------------------------------------------------------
 /*Crea una altra funció que desencripti i descodifiqui els fitxers de l'apartat anterior 
 tornant a generar una còpia de l'inicial.*/
 
-// const { createDecipheriv } = require('node:crypto');
+const { createDecipheriv } = require('node:crypto');
 
-// const decryptDecode = async (fitxerEncriptat) => {
-//   const content = (await readFileContent(fitxerEncriptat)).toString();
-//   // console.log(content)
-//   const algorithm = 'aes-192-cbc';
-//   console.log(key)
-//   // let decipher = createDecipheriv(algorithm, key, iv);
-//   const contentDesencriptat = decipher.update(content, 'hex', 'utf-8');
-//   contentDesencriptat += decipher.final('utf-8');
-//   const buff = Buffer.from(contentDesencriptat, 'hex');
-//   contingutDescodif = buff.toString('utf-8');
-//   creaFitxer('fitxer2.txt', contingutDescodif);
-//   return contingutDescodif;
-// };
+const decryptDecode = async (fitxerEncriptat, encoding) => {
+  const content = (await readFileContent(fitxerEncriptat)).toString();
+  const algorithm = 'aes-192-cbc';
+  console.log(key);
+  let decipher = createDecipheriv(algorithm, key, iv);
+  let contentDesencriptat = decipher.update(content, encoding, 'utf-8');
+  contentDesencriptat += decipher.final();
+  const buff = Buffer.from(contentDesencriptat, encoding);
+  contingutDescodif = buff.toString('utf-8');
+  creaFitxer(`${fitxerEncriptat}-DESENC.txt`, contingutDescodif);
+  return contingutDescodif;
+};
 
-// decryptDecode('fitxerHex.txt-Encrypt.txt');
-// // decryptDecode('fitxerBase64.txt-Encrypt.txt');
+// decryptDecode('fitxerHex.txt-Encrypt.txt', 'hex');
+decryptDecode('fitxerBase64.txt-Encrypt.txt', 'base64');
 //!---------------------------------------------------------------

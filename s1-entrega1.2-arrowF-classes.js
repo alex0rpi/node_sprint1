@@ -62,6 +62,7 @@ class Persona {
   }
 }
 /* Creació d'una subclass a suggerència de l'Oriol */
+/* TODO: M'he de mirar la solució mitjançant prototips */
 class nen extends Persona {
   constructor(nom) {
     super();
