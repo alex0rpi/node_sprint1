@@ -4,18 +4,18 @@
 que rep. Invoca-la passant-li les dues funcions de manera que imprimeixin un missatge
 diferent depenent de si la Promise es resol o no. */
 
-// const funcio = (boolean) => {
-//   return new Promise((resolve, reject) => {
-//     let condicio = boolean;
-//     if (condicio) {
-//       resolve('Promesa realitzada');
-//     } else {
-//       reject('Promesa refusada.');
-//     }
-//   });
-// };
-// console.log(funcio(true));
-// console.log(funcio(false));
+const funcio = (boolean) => {
+  return new Promise((resolve, reject) => {
+    let condicio = boolean;
+    if (condicio) {
+      resolve('Promesa resolta');
+    } else {
+      reject('Promesa refusada.');
+    }
+  });
+};
+// funcio(true).then((result) => console.log(result));
+// funcio(false).catch((err) => console.log(err));
 
 // Ex2
 /* Crea una arrow function que rebi un paràmetre i una funció callback i li passi a 
@@ -28,9 +28,11 @@ la funció un missatge o un altre (que s'imprimirà per consola) en funció del 
 //     cb('Non habemus papam');
 //   }
 // };
-
-// funcio2(true, (x) => console.log(x));
-// funcio2(false, (x) => console.log(x));
+// function cb(x) {
+//   console.log(x);
+// }
+// funcio2(true, cb);
+// funcio2(false, cb);
 
 // *##### Nivell 2 #####
 // Ex1
@@ -50,22 +52,20 @@ let salaries = [
 ];
 
 const getEmployee = (id) => {
-  let found = false; //m'agradaria no necessitar aquesta variable
+  // let found = false; //m'agradaria no necessitar aquesta variable
   let promesa = new Promise((resolve, reject) => {
     for (let i in employees) {
       if (employees[i].id === id) {
-        found = true;
-        resolve({ message: 'Employee trobat', employeeName: employees[i].name });
+        // found = true;
+        resolve({ employeeName: employees[i].name });
       }
     }
-    if (!found) {
-      reject({ message: 'Employee not found' });
-    }
+    reject({ message: 'Employee not found' });
   });
   return promesa;
 };
 
-getEmployee(2)
+getEmployee(1)
   .then((result) => console.log(result))
   .catch((error) => console.log(error));
 
@@ -74,21 +74,15 @@ getEmployee(2)
 paràmetre un objecte employee i retorni el seu salari. */
 
 const getSalary = (objEmployee) => {
-  let trobat = false; //m'agradaria no necessitar aquesta variable
   let laPromesa = new Promise((resolve, reject) => {
     for (let i in salaries) {
       if (salaries[i].id === objEmployee.id) {
-        trobat = true;
         resolve({
-          message: 'Salary trobat',
-          empName: objEmployee.name,
           salary: salaries[i].salary,
         });
       }
     }
-    if (!trobat) {
-      reject({ message: 'Salary not found' });
-    }
+    reject({ message: 'Salary not found' });
   });
   return laPromesa;
 };
@@ -101,30 +95,41 @@ getSalary({ id: 2, name: 'Bill Gates' })
 /* Invoca la primera funció getEmployee() i després getSalary() niant l'execució de les dues promises de 
 manera que es retorni per la consola el nom de l'empleat/da i el seu salari. */
 
-// let id = 3;
-// getEmployee(id).then((result) => {
-//   let objecteEmployee = {
-//     id:id,
-//     name: result.employeeName,
-//   };
-//   getSalary(objecteEmployee).then((result) => {
-//     console.log({ nomEmpleat: result.empName, salari: result.salary });
+// let id = 2;
+// let employee = {
+//   nom: '',
+//   salari: null,
+// };
+// getEmployee(id)
+//   .then((result) => {
+//     employee = {
+//       id: id,
+//       nom: result.employeeName,
+//     };
+//     return getSalary(employee);
+//   })
+//   .then((result) => {
+//     console.log(`El nom és ${employee.nom} i salari de ${result.salary}`);
 //   });
-// });
 
 // *##### Nivell 3 #####
 // Ex1
 /* Fixa un element catch a la invocació del nivell anterior que capturi qualsevol error i el 
 mostri per la consola. */
-let id = 2;
+let id = 7
+let employee = {
+  nom: '',
+  salari: null,
+};
 getEmployee(id)
   .then((result) => {
-    let objecteEmployee = {
+    employee = {
       id: id,
-      name: result.employeeName,
+      nom: result.employeeName,
     };
-    getSalary(objecteEmployee).then((result) => {
-      console.log({ nomEmpleat: result.empName, salari: result.salary });
-    });
+    return getSalary(employee);
+  })
+  .then((result) => {
+    console.log(`El nom és ${employee.nom} i salari de ${result.salary}`);
   })
   .catch((error) => console.log(error));

@@ -3,6 +3,8 @@
 /*Mostra per la consola el resultat d'una arrow function autoinvocable que
  sumi dos nombres*/
 
+const { CallTracker } = require('assert');
+
 // console.log(
 //   (() => {
 //     return 1 + 2;
@@ -37,30 +39,42 @@ Invoca el mètode dirNom des de fora de la classe. */
 // }
 
 // const home = new Persona('Alex');
+// const dona = new Persona('Clara')
 // home.dirNom();
+// dona.dirNom()
 
 // ##### Nivell 3 #####
 // Ex1
 /* Escriu una function creadora d'objectes que faci instàncies d'una classe abstracta.
 Invoca-la (la funció) amb diferents definicions. */
 
-// class Persona {
-//   constructor(nom) {
-//     // Evitar que la classe pugui ser instanciada
-//     if(this.constructor === Persona){
-//         throw new Error('Abstract class no pot ser instanciada.')
-//     }
-//     this.nom = nom;
-//   }
-//   //   mètodes
-//   dirNom() {
-//     console.log(`El nom és ${this.nom}`);
-//   }
-// }
+class Persona {
+  constructor(nom) {
+    // Evitar que la classe pugui ser instanciada
+    if (this.constructor === Persona) {
+      throw new Error('Abstract class no pot ser instanciada.');
+    }
+    this.nom = nom;
+  }
+  //   mètodes
+  dirNom() {
+    console.log(`El nom és ${this.nom}`);
+  }
+}
+/* Creació d'una subclass a suggerència de l'Oriol */
+class nen extends Persona {
+  constructor(nom) {
+    super();
+    this.nom = nom;
+  }
+}
 
-// const funcioCrearObjectes = (nomObjecte) => {
-//   const objecteNou = new Persona(nomObjecte)
-//   return objecteNou
-// }
+const funcioCrearObjectes = (nomObjecte) => {
+  const objecteNou = new nen(nomObjecte);
+  return objecteNou;
+};
 
-// funcioCrearObjectes('Mies')
+let nouObjecte = funcioCrearObjectes('Mies');
+nouObjecte.dirNom();
+
+let novaPersona = new Persona('Pepito')
