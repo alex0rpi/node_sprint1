@@ -171,6 +171,8 @@ const encriptaAESiEsborra = async (f) => {
   let encryptedF = cipher.update(contentF);
 
   encryptedF = Buffer.concat([encryptedF, cipher.final()]);
+  // !No entiendo bien esta linea ⬆
+  // Buffer.concat returns a buffer
 
   const FitxerEncriptat = creaFitxerEncriptat(
     `${f}-Encrypt.txt`,
@@ -202,9 +204,9 @@ const decryptDecode = async (fitxerEncriptat, encoding) => {
   contentDesencriptat += decipher.final();
 
   /* We create a buffer based on the encoding of the decrypted file */
-  const buff = Buffer.from(contentDesencriptat, encoding);
+  const buf = Buffer.from(contentDesencriptat, encoding);
 
-  contingutDescodif = buff.toString('utf-8');
+  contingutDescodif = buf.toString('utf-8');
 
   /*Utilitzar funció de l'apartat 1 nivell 1 */
   creaFitxer(`${fitxerEncriptat}-DESENC.txt`, contingutDescodif);
