@@ -43,9 +43,9 @@ const getSalary = (objEmployee) => {
   return laPromesa;
 };
 
-getSalary({ id: 1, name: 'Linux Torvalds' })
-  .then((result) => console.log(result))
-  .catch((error) => console.log(error));
+// getSalary({ id: 1, name: 'Linux Torvalds' })
+//   .then((result) => console.log(result))
+//   .catch((error) => console.log(error));
 
 module.exports = {
   getEmployee,
