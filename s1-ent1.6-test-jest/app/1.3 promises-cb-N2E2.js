@@ -11,11 +11,10 @@ let salaries = [
 ];
 
 const getEmployee = (id) => {
-  // let found = false; //m'agradaria no necessitar aquesta variable
+  if (isNaN(id)) throw new Error('Invalid id input, id number expected');
   let promesa = new Promise((resolve, reject) => {
     for (let i in employees) {
       if (employees[i].id === id) {
-        // found = true;
         resolve({ employeeName: employees[i].name });
       }
     }
@@ -24,11 +23,13 @@ const getEmployee = (id) => {
   return promesa;
 };
 
-getEmployee(1)
-  .then((result) => console.log(result))
-  .catch((error) => console.log(error));
+// getEmployee(1)
+//   .then((result) => console.log(result))
+//   .catch((error) => console.log(error));
 
 const getSalary = (objEmployee) => {
+  if (typeof objEmployee !== 'object') throw new Error('input must be of object type');
+  /* Si reb una Array, superaria l'if anterior, però almenys filtra la resta de types */
   let laPromesa = new Promise((resolve, reject) => {
     for (let i in salaries) {
       if (salaries[i].id === objEmployee.id) {
@@ -42,6 +43,11 @@ const getSalary = (objEmployee) => {
   return laPromesa;
 };
 
-getSalary({ id: 2, name: 'Bill Gates' })
+getSalary({ id: 1, name: 'Linux Torvalds' })
   .then((result) => console.log(result))
   .catch((error) => console.log(error));
+
+module.exports = {
+  getEmployee,
+  getSalary,
+};

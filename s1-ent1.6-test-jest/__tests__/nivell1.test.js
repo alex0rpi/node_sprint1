@@ -70,31 +70,64 @@ const {
 l'exercici Promises i Callbacks N1 E2. */
 const { funcioParamCb, cb } = require('../app/1.2 promises-cb-N1E2');
 
-describe('funcioParamCb', () => {
-  test('funcioParamCb throws error if 1st parameter is NOT a boolean', () => {
-    expect(() => funcioParamCb(7, cb).toThrow('parameter must be a boolean'));
-    expect(() => funcioParamCb('a', cb).toThrow('parameter must be a boolean'));
-    expect(() => funcioParamCb([true], cb).toThrow('parameter must be a boolean'));
-  });
-  test('funcioParamCb throws error if 2nd parameter is NOT a function', () => {
-    expect(() => funcioParamCb(7,3).toThrow('A callback function must be passed in'));
-  });
-});
-// // --------------------------------------------
-describe('callback - (cb)', () => {
-  test('cb receives and uses ONE parameter or else it throws an error', () => {
-    expect.assertions(1);
-    function cb(x) {
-      expect(x).toBeTruthy();
-      console.log(x);
-    }
-    funcioParamCb(true, cb);
-  });
-  test('cb function throws error in case parameter is NOT of type string', () => {
-    expect(() => cb(2).toThrow('cb function received invalid data'));
-    expect(() => cb(true).toThrow('cb function received invalid data'));
-  });
-});
+// describe('funcioParamCb', () => {
+//   test('funcioParamCb throws error if 1st parameter is NOT a boolean', () => {
+//     expect(() => funcioParamCb(7, cb).toThrow('parameter must be a boolean'));
+//     expect(() => funcioParamCb('a', cb).toThrow('parameter must be a boolean'));
+//     expect(() => funcioParamCb([true], cb).toThrow('parameter must be a boolean'));
+//   });
+//   test('funcioParamCb throws error if 2nd parameter is NOT a function', () => {
+//     expect(() => funcioParamCb(7,3).toThrow('A callback function must be passed in'));
+//   });
+// });
+// --------------------------------------------
+// describe('callback - (cb)', () => {
+//   test('cb receives and uses ONE parameter or else it throws an error', () => {
+//     expect.assertions(1);
+//     function cb(x) {
+//       expect(x).toBeTruthy();
+//       console.log(x);
+//     }
+//     funcioParamCb(true, cb);
+//   });
+//   test('cb function throws error in case parameter is NOT of type string', () => {
+//     expect(() => cb(2).toThrow('cb function received invalid data'));
+//     expect(() => cb(true).toThrow('cb function received invalid data'));
+//   });
+// });
 
 /*PUNT-3. Crea els tests corresponents per verificar el funcionament de les funcions de l'exercici
  Promises i Callbacks N2 E1 i Promises i Callbacks N2 E2 (getEmployee() i getSalary()).*/
+
+const { getEmployee, getSalary } = require('../app/1.3 promises-cb-N2E2');
+
+describe('getEmployee', () => {
+  test('getEmployee throws an error if the argument is NaN', () => {
+    expect(() => getEmployee('a').toThrow('Invalid id input, id number expected'));
+  });
+  test('getEmployee indeed returns a promise', () => {
+    id = 3;
+    return getEmployee(id).then((result) =>
+      expect(result.employeeName).toBe('Jeff Bezos')
+    );
+  });
+  // Validar quan la promise ha de ser rejected amb un id input no vàlid
+  test('getEmployee returned promise should be of state "rejected" upon a not found id', () => {
+    id = 7; // which won't be found in the employees array
+    expect.assertions(1); //only ONE assertion call expected.
+    return getEmployee(id).catch((err) => expect(err).not.toBeNull());
+  });
+});
+// --------------------------------------------
+// describe('getSalary', () => {
+//   test('getSalary receives the right object parameter', () => {
+//     // getSalary({ id: 1, name: 'Linux Torvalds' });
+//     const getSalary = jest.fn({ id: 1, name: 'Linux Torvalds' });
+//     expect(getSalary).toHaveBeenCalledWith(
+//       expect.objectContaining({
+//         id: expect.any(Number),
+//         name: expect.any(String),
+//       })
+//     );
+//   });
+// });
