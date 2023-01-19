@@ -1,3 +1,5 @@
+/* Nota: aquest fitxer importa els arxius .js del directori app, que conté les
+funcions per testejar demanades als enunciats.*/
 //* NIVELL 1
 /*PUNT-1. Crea un arxiu amb les funcions sumar, restar, multiplicar i dividir dos o més operands. 
 Testeja la correcta execució d'aquestes funcions. */

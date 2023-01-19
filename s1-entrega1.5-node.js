@@ -19,13 +19,13 @@ const creaFitxer = (nomFitxer, text) => {
 // !Ex2---------------------------------------------------------------
 /*Crea una altra funció que mostri per consola el contingut del fitxer de l'exercici anterior.*/
 
-// const mostraContingutFitxer = (fileName) => {
-//   fs.readFile(`./fitxers_creats/${fileName}`, 'utf8', (err, data) => {
-//     /* A diferència de fs.createReadStream (que transfereix petits chunks), fs.readfile agafa la totalitat del contingut del fitxer i espera a què sigui emmagatzemat en memòria aband d'executar el callback. */
-//     if (err) throw err;
-//     console.log(data);
-//   });
-// };
+const mostraContingutFitxer = (fileName) => {
+  fs.readFile(`./fitxers_creats/${fileName}`, 'utf8', (err, data) => {
+    /* A diferència de fs.createReadStream (que transfereix petits chunks), fs.readfile agafa la totalitat del contingut del fitxer i espera a què sigui emmagatzemat en memòria aband d'executar el callback. */
+    if (err) throw err;
+    console.log(data);
+  });
+};
 // /* ⬆ O BE ⬇*/
 // const mostraContingutFitxer = (fileName) => {
 //   fs.readFile(`./fitxers_creats/${fileName}`, (err, data) => {
@@ -72,17 +72,23 @@ const { setTimeout } = require('timers');
 const frecursiva = () => {
   console.log('Imprimeixo missatge cada 1s');
   setTimeout(() => {
-    frecursiva();
+    frecursiva(); //Aquí tenim la recursió, la funció es crida a sí mateixa
   }, 1000);
 };
 /* Cridar la funció aquí ⬇ */
+/* Aquí el Tomàs discrepava i deia que era molt més senzill, fent servir un setInterval.
+function repeteix(){
+  setInterval(() => console.log('Això és una prova amb demora d'1 segon), 1000)
+}
+Jo opino que si bé això funciona, no ho fa recursivament, és a dir tal com diu l'enunciat.*/
 // frecursiva();
 
 // !Ex2---------------------------------------------------------------
 /*Crea una funció que llisti per la consola el contingut del directori d'usuari/ària de 
 l'ordinador utilizant Node Child Processes.*/
-const directory = 'C:/Users/'; // <-- suposant que ens referim a aquest directori
-
+const os = require('os');
+// A suggerència del Tomàs farem la funció més extensiva a quassevol 'os' i no restringida a windows.
+const directory = os.homedir(); //retorna la ruta del directori usuari
 /* Sense child processes ho hauria fet així:⬇ */
 // fs.readdir(directory, (err, files) => {
 //   files.forEach((file) => {
@@ -91,16 +97,17 @@ const directory = 'C:/Users/'; // <-- suposant que ens referim a aquest director
 //   if (err) console.log(err);
 // });
 
-// Amb node child processes ↓↓
+/* Amb node child processes només ho he sapigut fer suposant que estem a windows ↓↓
+així, amb el .exec executu un shell amb una típica comanda de windows: dir  */
 /* spawn(), fork(), exec(), execFile() --> methods to create a child process in Node.*/
 /*child_process.exec(): spawns a shell and runs a command within that shell, passing 
-the stdout and stderr to a callback function when complete.*/
-// child_process.exec('dir C:\\Users', function (error, stdout, stderr) {
+    the stdout and stderr to a callback function when complete.*/
+// child_process.exec('dir C:\\Users\\formacio', function (error, stdout, stderr) {
 //   if (error) {
 //     console.log(`exec error: ${error}`);
 //     return;
 //   }
-//   console.log(`stdour: ${stdout}`);
+//   console.log(`stdout: ${stdout}`);
 //   console.error(`stderr: ${stderr}`);
 // });
 
@@ -153,8 +160,8 @@ const creaFitxerEncriptat = (nomFitxer, text) => {
   );
 };
 /* Defineixo una key i un iv que faré servir per a encriptar i més endavant per a descencriptar */
-let key = '123456789123456789123456'; // initialisation vector
-let iv = '1234567891234567'; // initialisation vector
+let key = '123456789123456789123456'; // initialisation vector 32 bytes
+let iv = '1234567891234567'; // initialisation vector 16 bytes
 
 // **Llibreria de node: crypto**
 
@@ -212,6 +219,6 @@ const decryptDecode = async (fitxerEncriptat, encoding) => {
   creaFitxer(`${fitxerEncriptat}-DESENC.txt`, contingutDescodif);
 };
 /* Cridar la funció per als dos fitxers encriptats aquí ⬇ */
-// decryptDecode('fitxerHex.txt-Encrypt.txt', 'hex');
-// decryptDecode('fitxerBase64.txt-Encrypt.txt', 'base64');
+decryptDecode('fitxerHex.txt-Encrypt.txt', 'hex');
+decryptDecode('fitxerBase64.txt-Encrypt.txt', 'base64');
 //!---------------------------------------------------------------
