@@ -14,12 +14,12 @@ const creaFitxer = (nomFitxer, text) => {
   fs.writeFile(`./fitxers_creats/${nomFitxer}`, text, () => console.log('Fitxer creat'));
 };
 /* Aquesta funció ⬆ es reutilitza en els punts primer i tercer del nivell 3 */
-// creaFitxer('fitxer1.txt', "El Mies es pensa que no sobreviurà a l'hivern");
+creaFitxer('fitxer1.txt', "El Mies es pensa que no sobreviurà a l'hivern");
 
 // !Ex2---------------------------------------------------------------
 /*Crea una altra funció que mostri per consola el contingut del fitxer de l'exercici anterior.*/
 
-const mostraContingutFitxer = (fileName) => {
+const mostraContingutFitxer1 = (fileName) => {
   fs.readFile(`./fitxers_creats/${fileName}`, 'utf8', (err, data) => {
     /* A diferència de fs.createReadStream (que transfereix petits chunks), fs.readfile agafa la totalitat del contingut del fitxer i espera a què sigui emmagatzemat en memòria aband d'executar el callback. */
     if (err) throw err;
@@ -27,14 +27,15 @@ const mostraContingutFitxer = (fileName) => {
   });
 };
 // /* ⬆ O BE ⬇*/
-// const mostraContingutFitxer = (fileName) => {
-//   fs.readFile(`./fitxers_creats/${fileName}`, (err, data) => {
-//     if (err) throw err;
-//     console.log(data.toString());
-//   });
-// };
+const mostraContingutFitxer2 = (fileName) => {
+  fs.readFile(`./fitxers_creats/${fileName}`, (err, data) => {
+    if (err) throw err;
+    console.log(data.toString());
+  });
+};
 /* Cridar la funció aquí ⬇ */
-// mostraContingutFitxer('fitxer1.txt');
+// mostraContingutFitxer1('fitxer1.txt');
+// mostraContingutFitxer2('fitxer1.txt');
 
 // !Ex3---------------------------------------------------------------
 /*Crea una funció que comprimeixi el fitxer del nivell 1.*/
@@ -59,10 +60,10 @@ const comprimeix = (fileToZip) => {
     }
     console.log('Compressed file was created.');
   });
-  /* O BE: encadenar pipes.↓↓*/
+  /* O BE: encadenar pipes.↓↓⬇*/
   // source.pipe(gzip).pipe(destination)
 };
-/* Cridar la funció aquí ⬇ */
+/* Cridar la funció aquí ⬇⬇⬇ */
 // comprimeix('fitxer1.txt');
 
 // *##### Nivell 2 #####
@@ -75,41 +76,42 @@ const frecursiva = () => {
     frecursiva(); //Aquí tenim la recursió, la funció es crida a sí mateixa
   }, 1000);
 };
-/* Cridar la funció aquí ⬇ */
+/* Cridar la funció aquí ⬇⬇⬇ */
+// frecursiva();
 /* Aquí el Tomàs discrepava i deia que era molt més senzill, fent servir un setInterval.
 function repeteix(){
   setInterval(() => console.log('Això és una prova amb demora d'1 segon), 1000)
 }
 Jo opino que si bé això funciona, no ho fa recursivament, és a dir tal com diu l'enunciat.*/
-// frecursiva();
 
 // !Ex2---------------------------------------------------------------
 /*Crea una funció que llisti per la consola el contingut del directori d'usuari/ària de 
 l'ordinador utilizant Node Child Processes.*/
 const os = require('os');
-// A suggerència del Tomàs farem la funció més extensiva a quassevol 'os' i no restringida a windows.
+// A suggerència del Tomàs fer la funció més extensiva a quassevol 'os' i no restringida a windows.
+// Passa que ell no ho ha fet utilizant Node Child Processes
 const directory = os.homedir(); //retorna la ruta del directori usuari
 /* Sense child processes ho hauria fet així:⬇ */
-// fs.readdir(directory, (err, files) => {
-//   files.forEach((file) => {
-//     console.log(file);
-//   });
-//   if (err) console.log(err);
-// });
+fs.readdir(directory, (err, files) => {
+  files.forEach((file) => {
+    console.log(file);
+  });
+  if (err) console.log(err);
+});
 
 /* Amb node child processes només ho he sapigut fer suposant que estem a windows ↓↓
-així, amb el .exec executu un shell amb una típica comanda de windows: dir  */
+així, amb el .exec s'executa un shell amb una comanda de windows: dir  */
 /* spawn(), fork(), exec(), execFile() --> methods to create a child process in Node.*/
 /*child_process.exec(): spawns a shell and runs a command within that shell, passing 
     the stdout and stderr to a callback function when complete.*/
-// child_process.exec('dir C:\\Users\\formacio', function (error, stdout, stderr) {
-//   if (error) {
-//     console.log(`exec error: ${error}`);
-//     return;
-//   }
-//   console.log(`stdout: ${stdout}`);
-//   console.error(`stderr: ${stderr}`);
-// });
+child_process.exec('dir C:\\Users\\formacio', function (error, stdout, stderr) {
+  if (error) {
+    console.log(`exec error: ${error}`);
+    return;
+  }
+  console.log(`stdout: ${stdout}`);
+  console.error(`stderr: ${stderr}`);
+});
 
 // *##### Nivell 3 ##### !Ex1
 /*Crea una funció que creï dos fitxers codificats en hexadecimal i en base64 respectivament, 
@@ -142,7 +144,7 @@ const createCodedFiles = async (file) => {
   creaFitxer('fitxerHex.txt', hexContent);
   creaFitxer('fitxerBase64.txt', base64Content);
 };
-/* Cridar la funció aquí ⬇ */
+/* Cridar la funció aquí ⬇⬇⬇ */
 // createCodedFiles(fitxerInicial);
 //!---------------------------------------------------------------
 
@@ -192,7 +194,7 @@ const encriptaAESiEsborra = async (f) => {
   return FitxerEncriptat;
 };
 
-/* Cridar la funció per als dos fitxers codificats aquí ⬇ */
+/* Cridar la funció per als dos fitxers codificats aquí ⬇⬇⬇ */
 // encriptaAESiEsborra('fitxerHex.txt');
 // encriptaAESiEsborra('fitxerBase64.txt');
 //!---------------------------------------------------------------
@@ -218,7 +220,7 @@ const decryptDecode = async (fitxerEncriptat, encoding) => {
   /*Utilitzar funció de l'apartat 1 nivell 1 */
   creaFitxer(`${fitxerEncriptat}-DESENC.txt`, contingutDescodif);
 };
-/* Cridar la funció per als dos fitxers encriptats aquí ⬇ */
+/* Cridar la funció per als dos fitxers encriptats aquí ⬇⬇⬇ */
 decryptDecode('fitxerHex.txt-Encrypt.txt', 'hex');
 decryptDecode('fitxerBase64.txt-Encrypt.txt', 'base64');
 //!---------------------------------------------------------------
