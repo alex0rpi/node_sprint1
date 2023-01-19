@@ -1,0 +1,7 @@
+{
+  "typeAcquisition": {
+    "include": ["jest"]
+  }
+}
+/* Provides VS Code autocomplete for jest 
+after installing npm i @types/jest*/

@@ -48,49 +48,60 @@ Invoca-la (la funció) amb diferents definicions. */
 
 class Person {
   constructor(nom) {
-    // Evitar que la classe pugui ser instanciada
-    if (this.constructor === Person) {
-      throw new Error('Abstract class no pot ser instanciada.');
-    }
+    if (this.constructor === Person)
+      throw new Error('Abstract class no pot ser instanciada mitjançant "new"');
     this.nom = nom;
   }
-  //   mètodes
   dirNom() {
-    console.log(`El nom és ${this.nom}`);
+    console.log(`El meu nom és ${this.nom}`);
   }
 }
 
 /* Solució mitjançant prototips */
-const funcioCreateObjects = (objectInstanceName) => {
-  const individu = {
-    prototype: Person,
-    nom: objectInstanceName,
-    dirNom: () => console.log(`El nom de l'individu és ${objectInstanceName}`),
+const funcioCreateObjects = (name) => {
+  // Objecte que contindrà les propietats que volem assignar al prototip.
+  const objecte = {
+    constructor: Person,
   };
-  const newIndividu = Object.create(individu);
+  Person.prototype = objecte;
+  /* Assigno la propietat prototype de Person al nou objecte creat, que incorpora la propietat 
+  constructor que defineix quin ha de ser el "blueprint" per crear futures instàncies */
+  const newIndividu = Object.create(Person.prototype);
+  /* The Object.create() static method creates a new object, using an existing object as the 
+  prototype of the newly created object. */
+  newIndividu.nom = name;
   return newIndividu;
 };
-const Alex = funcioCreateObjects('Alex');
-Alex.dirNom();
-console.log(Alex.prototype);
-console.log(Alex instanceof Person)
+// Invoco la funcioCreateObjects amb diferents noms d'objecte
+console.log("------------")
+const Alexander = funcioCreateObjects('Alexander');
+Alexander.dirNom();
+console.log(Alexander.constructor);
+console.log(`Alexander is an instance of the abstract class Person --> ${Alexander instanceof Person} <--`);
+console.log("------------")
+const Mies = funcioCreateObjects('Mies');
+Mies.dirNom();
+console.log(Mies.constructor);
+console.log(`Mies is an instance of the abstract class Person --> ${Mies instanceof Person} <--`);
+console.log("------------")
 
 
-/* Creació d'una subclass a suggerència de l'Oriol, no cal descomentar.*/
-// class nen extends Person {
-//   constructor(nom) {
-//     super();
-//     this.nom = nom;
-//   }
-// }
+/* A suggerència de l'Oriol, vaig crear una sub class però això no és pas la solució.
+class nen extends Person {
+  constructor(nom) {
+    super();
+    this.nom = nom;
+  }
+}
 
-// const funcioCrearObjectes = (nomObjecte) => {
-//   const objecteNou = new nen(nomObjecte);
-//   return objecteNou;
-// };
+const funcioCrearObjectes = (nomObjecte) => {
+  const objecteNou = new nen(nomObjecte);
+  return objecteNou;
+};
 
-// let nouObjecte = funcioCrearObjectes('Mies');
-// nouObjecte.dirNom();
+let nouObjecte = funcioCrearObjectes('Mies');
+nouObjecte.dirNom();
 
-// let novaPersona = new Person('Pepito');
-// novaPersona.dirNom(); //donaria error perquè no s'ha pogut instanciar novaPersona
+let novaPersona = new Person('Pepito');
+novaPersona.dirNom(); //donaria error perquè no s'ha pogut instanciar novaPersona
+*/

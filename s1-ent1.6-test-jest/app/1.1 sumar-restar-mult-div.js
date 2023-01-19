@@ -24,21 +24,6 @@ exports.dividir = function dividir(a, b) {
   return a / b;
 }
 
-/* Em pregunto si és més eficient alimentar una array d'errors */
-// function dividir(a, b) {
-//   let errors = [];
-//   if (!a || !b) errors.push('input data missing (undefined)');
-//   if (a === 'NaN' || b === 'NaN') errors.push('invalid input data');
-//   if (a === 0 && b === 0) errors.push('result is undetermined');
-//   if (b === 0) errors.push('result does not exist, denominator is zero');
-//   for (let i in errors) {
-//     if (errors[i]) console.log(errors[i]);
-//   }
-//   if (errors.length === 0) {
-//     return a / b;
-//   }
-// }
-
 // module.exports = {
 //   sumar,
 //   restar,
