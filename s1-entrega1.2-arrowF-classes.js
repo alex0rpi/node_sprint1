@@ -59,21 +59,38 @@ class Person {
     console.log(`El nom és ${this.nom}`);
   }
 }
-/* Creació d'una subclass a suggerència de l'Oriol */
-/* TODO: M'he de mirar la solució mitjançant prototips */
-class nen extends Person {
-  constructor(nom) {
-    super();
-    this.nom = nom;
-  }
-}
 
-const funcioCrearObjectes = (nomObjecte) => {
-  const objecteNou = new nen(nomObjecte);
-  return objecteNou;
+/* Solució mitjançant prototips */
+const funcioCreateObjects = (objectInstanceName) => {
+  const individu = {
+    prototype: Person,
+    nom: objectInstanceName,
+    dirNom: () => console.log(`El nom de l'individu és ${objectInstanceName}`),
+  };
+  const newIndividu = Object.create(individu);
+  return newIndividu;
 };
+const Alex = funcioCreateObjects('Alex');
+Alex.dirNom();
+console.log(Alex.prototype);
+console.log(Alex instanceof Person)
 
-let nouObjecte = funcioCrearObjectes('Mies');
-nouObjecte.dirNom();
 
-let novaPersona = new Person('Pepito');
+/* Creació d'una subclass a suggerència de l'Oriol, no cal descomentar.*/
+// class nen extends Person {
+//   constructor(nom) {
+//     super();
+//     this.nom = nom;
+//   }
+// }
+
+// const funcioCrearObjectes = (nomObjecte) => {
+//   const objecteNou = new nen(nomObjecte);
+//   return objecteNou;
+// };
+
+// let nouObjecte = funcioCrearObjectes('Mies');
+// nouObjecte.dirNom();
+
+// let novaPersona = new Person('Pepito');
+// novaPersona.dirNom(); //donaria error perquè no s'ha pogut instanciar novaPersona
