@@ -5,7 +5,7 @@ per pantalla el nom de l'empleat/da i el seu salari, usant les funcions getEmplo
 i getSalary() que has definit a la tasca anterior. */
 
 /* Comentari: el Tomàs m'ha recordat la funcionalitat VSC d'executar amb F5 o start debugging
-i anar pas per pas en l'execució amb la tecla F11. */
+i anar pas per pas en l'execució amb la tecla F11.  */
 
 let employees = [
   { id: 1, name: 'Linux Torvalds' },
