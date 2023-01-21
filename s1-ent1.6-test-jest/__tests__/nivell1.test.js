@@ -8,7 +8,7 @@ const {
   restar,
   multiplicar,
   dividir,
-} = require('../app/1.1 sumar-restar-mult-div');
+} = require('../app/N1E1-sumar-restar-mult-div');
 
 describe('sumar', () => {
   test('sumar throws error if one param is undefined or null', () => {
@@ -22,7 +22,6 @@ describe('sumar', () => {
     expect(result).toBe(5);
   });
 });
-// --------------------------------------------
 describe('restar', () => {
   test('restar throws error if one param is undefined or null', () => {
     expect(() => restar(2, null)).toThrow('input data missing (undefined)');
@@ -35,7 +34,6 @@ describe('restar', () => {
     expect(result).toBe(3);
   });
 });
-// --------------------------------------------
 describe('multiplicar', () => {
   test('multiplicar throws error if one param is undefined or null', () => {
     expect(() => multiplicar(2, null)).toThrow('input data missing (undefined)');
@@ -48,7 +46,6 @@ describe('multiplicar', () => {
     expect(result).toBe(10);
   });
 });
-// --------------------------------------------
 describe('dividir', () => {
   test('dividir throws error if one param is undefined or null', () => {
     expect(() => dividir(2, null)).toThrow('input data missing (undefined)');
@@ -70,7 +67,7 @@ describe('dividir', () => {
 
 /*PUNT-2. Crea els tests corresponents per verificar el funcionament de les dues funcions de
 l'exercici Promises i Callbacks N1 E2. */
-const { funcioParamCb, cb } = require('../app/1.2 promises-cb-N1E2');
+const { funcioParamCb, cb } = require('../app/N1E2-1.3promis-cb-N1E2');
 
 describe('funcioParamCb', () => {
   test('funcioParamCb throws error if 1st parameter is NOT a boolean', () => {
@@ -79,10 +76,9 @@ describe('funcioParamCb', () => {
     expect(() => funcioParamCb([true], cb).toThrow('parameter must be a boolean'));
   });
   test('funcioParamCb throws error if 2nd parameter is NOT a function', () => {
-    expect(() => funcioParamCb(7,3).toThrow('A callback function must be passed in'));
+    expect(() => funcioParamCb(7, 3).toThrow('A callback function must be passed in'));
   });
 });
-// --------------------------------------------
 describe('callback - (cb)', () => {
   test('cb receives and uses ONE parameter or else it throws an error', () => {
     expect.assertions(1);
@@ -101,10 +97,10 @@ describe('callback - (cb)', () => {
 /*PUNT-3. Crea els tests corresponents per verificar el funcionament de les funcions de l'exercici
  Promises i Callbacks N2 E1 i Promises i Callbacks N2 E2 (getEmployee() i getSalary()).*/
 
-const { getEmployee, getSalary } = require('../app/1.3 promises-cb-N2E2');
+const { getEmployee, getSalary } = require('../app/N1E3-1.3promises-cb-N2E1E2');
 
 describe('getEmployee', () => {
-  test('getEmployee throws an error if the argument is NaN', () => {
+  test('getEmployee throws an error if the argument is !typeof number', () => {
     expect(() => getEmployee('a').toThrow('Invalid id input, id number expected'));
   });
   test('getEmployee indeed returns a promise', () => {
@@ -123,7 +119,6 @@ describe('getEmployee', () => {
     // return getEmployee(id).catch((err) => expect(err).not.toBeNull());
   });
 });
-// --------------------------------------------
 describe('getSalary', () => {
   test('getSalary receives the right object parameter', () => {
     let data = { id: 1, name: 'Linux Torvalds' };
@@ -132,20 +127,23 @@ describe('getSalary', () => {
       name: expect.any(String),
     });
   });
-  // test('getSalary must be called with the right object as parameter', () => {
-  //   const getSalary = jest.fn({ id: 1, name: 'Linux Torvalds' });
-  //   // simulateGetSalary(getSalary);
-  //   expect(getSalary).toHaveBeenCalledWith(
-  //     expect.objectContaining({
-  //       id: expect.any(Number),
-  //       name: expect.any(String),
-  //     })
-  //   );
-  // });
+  /* !!Aquest test d'aquí ⬇⬇ no em funciona correctament i no he sabut entendre per què:(  */
+  test('getSalary must be called with the right object as parameter', () => {
+    const getSalary = jest.fn({ id: 1, name: 'Linux Torvalds' });
+    expect(getSalary).toHaveBeenCalledWith(
+      expect.objectContaining({
+        id: expect.any(Number),
+        name: expect.any(String),
+      })
+    );
+  });
   /* Error dient⬆: number of calls:0 */
   test('getSalary returns a promise', () => {
     objEmployee = { id: 1, name: 'Linux Torvalds' };
-    return expect(getSalary(objEmployee)).resolves.toStrictEqual({ salary: 4000 });
+    return expect(getSalary(objEmployee)).resolves.toStrictEqual({
+      name: 'Linux Torvalds',
+      salary: 4000,
+    });
   });
   test('getSalary returned promise should be "rejected" if id not found', () => {
     objEmployee = { id: 8, name: 'Pepito Grillo' }; // which won't be found in the employees array
@@ -157,25 +155,22 @@ describe('getSalary', () => {
 /* PUNT-4. Crea els tests corresponents per verificar el funcionament de l'exercici 
 Async / Await N1 E2. */
 
-const retornaDoble = require('../app/1.4 async-await-N1E2');
+const { asyncf1 } = require('../app/N1E4-1.4async-await-N1E2');
+jest.useFakeTimers();
+/* Entenc que això substitueix la funcio setTimeout de asyncf1 per una altra pròpia de 
+jest que podrà controlar */
+jest.spyOn(global, 'setTimeout');
+/* Crea una mock function, (funció simulada) que vigilarà el comportament
+dins del block setTimeout */
 
-describe('async-await-N1E2 retornaDoble', () => {
-  jest.useFakeTimers();
-  jest.spyOn(global, 'setTimeout');
-  test.todo('retornaDoble throws error if one param is NaN', () => {
-    expect(() => retornaDoble(null)).toThrow('please provide a number');
-    expect(() => retornaDoble('a')).toThrow('please provide a number');
+describe('asyncf1', () => {
+  test('asyncf1 calls its timer once after being invoked', () => {
+    asyncf1();
+    expect(setTimeout).toHaveBeenCalledTimes(1);
   });
-  // test('Should return a fn after 2 seconds of the second call.', () => {
-  //   newFunction().then((result) => {
-  //     expect(result).toBe('resolved after 2 seconds');
-  //   });
-  // });
-
-  test.todo('waits 2 second after passed the number twice', () => {
-    const number = retornaDoble(5);
-    jest.runAllTimers();
-    expect(number).toBe(10);
-
+  test('asyncf1 returns a promise after 2 seconds', () => {
+    asyncf1().then((result) =>
+      expect(result).toBe('Promesa resolta després de 2 segons')
+    );
   });
 });

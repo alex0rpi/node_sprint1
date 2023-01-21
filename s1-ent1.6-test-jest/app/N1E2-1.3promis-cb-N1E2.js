@@ -8,7 +8,6 @@ const funcioParamCb = (param, cb) => {
     throw new Error('A callback function must be passed in');
   if (param) {
     cb('Habemus papam');
-    // cb(3);
   } else {
     cb('Non habemus papam');
   }

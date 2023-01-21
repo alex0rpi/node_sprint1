@@ -11,7 +11,7 @@ let salaries = [
 ];
 
 const getEmployee = (id) => {
-  if (isNaN(id)) throw new Error('Invalid id input, id number expected');
+  if (typeof id !== 'number') throw new Error('Invalid id input, id number expected');
   let promesa = new Promise((resolve, reject) => {
     for (let i in employees) {
       if (employees[i].id === id) {
@@ -23,9 +23,9 @@ const getEmployee = (id) => {
   return promesa;
 };
 
-// getEmployee(1)
-//   .then((result) => console.log(result))
-//   .catch((error) => console.log(error));
+getEmployee(1)
+  .then((result) => console.log(result))
+  .catch((error) => console.log(error));
 
 const getSalary = (objEmployee) => {
   if (typeof objEmployee !== 'object') throw new Error('input must be of object type');
@@ -34,6 +34,7 @@ const getSalary = (objEmployee) => {
     for (let i in salaries) {
       if (salaries[i].id === objEmployee.id) {
         resolve({
+          name: objEmployee.name,
           salary: salaries[i].salary,
         });
       }
@@ -43,9 +44,9 @@ const getSalary = (objEmployee) => {
   return laPromesa;
 };
 
-// getSalary({ id: 1, name: 'Linux Torvalds' })
-//   .then((result) => console.log(result))
-//   .catch((error) => console.log(error));
+getSalary({ id: 1, name: 'Linux Torvalds' })
+  .then((result) => console.log(result))
+  .catch((error) => console.log(error));
 
 module.exports = {
   getEmployee,

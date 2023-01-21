@@ -15,5 +15,10 @@ Abans de començar, fer npm i que instal·larà:
 }
 
 ```
+Al package.json introduir el següent script:
 
-```
+  "scripts": {
+    // "test": "jest --watchAll --verbose --coverage"
+    O BÉ sense els flags
+    // "test": "jest"
+  },

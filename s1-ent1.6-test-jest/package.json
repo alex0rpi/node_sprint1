@@ -4,7 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "jest --watchAll --verbose --coverage"
+    
+    "test": "jest --verbose"
   },
   "keywords": [],
   "author": "",
