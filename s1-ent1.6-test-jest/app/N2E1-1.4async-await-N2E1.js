@@ -1,9 +1,10 @@
+// !1.4N2E1
+/* Crea una funció que retorni el doble del número que li passa com a paràmetre després de 2 segons. */
+
 const retornaDoble = (num) => {
   let promesa = new Promise((resolve, reject) => {
     if (!num || typeof num !== 'number') {
-      reject(
-        console.log('REJECTED: Error, parameter(s) either missing or not of type number')
-      );
+      reject('REJECTED: Error, parameter(s) either missing or not of type number');
       return;
     }
     setTimeout(() => {
@@ -13,7 +14,5 @@ const retornaDoble = (num) => {
   });
   return promesa;
 };
-// Descomentar línia següent ⬇⬇
-// retornaDoble(3);
 
 module.exports = { retornaDoble };

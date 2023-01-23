@@ -6,6 +6,7 @@ He introduït modificacions en aquestes funcions a fi que incloguin validacions
 i que retornin Error en certs supòsits per tal què superin els tests.
 
 Abans de començar, fer npm i que instal·larà:
+
 ```
 "devDependencies": {
 "jest": "^29.3.1"
@@ -15,10 +16,13 @@ Abans de començar, fer npm i que instal·larà:
 }
 
 ```
+
 Al package.json introduir el següent script:
 
+```
   "scripts": {
     // "test": "jest --watchAll --verbose --coverage"
     O BÉ sense els flags
     // "test": "jest"
   },
+```
