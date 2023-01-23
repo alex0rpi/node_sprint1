@@ -1,11 +1,13 @@
 ### Readme
 
-El fitxer nivell1.test.js importa les funcions contingudes en els fitxers dins del directori app.
+El fitxers continguts al directori __tests__ importen les funcions contingudes en els fitxers dins del directori app.
 
 He introduït modificacions en aquestes funcions a fi que incloguin validacions
 i que retornin Error en certs supòsits per tal què superin els tests.
 
-Abans de començar, fer npm i que instal·larà:
+Abans de començar
+--> cd al directori "s1-ent1.6-test-jest"
+--> npm i
 
 ```
 "devDependencies": {

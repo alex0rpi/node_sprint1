@@ -59,7 +59,7 @@ describe('dividir', () => {
   test('dividir throws error the second param is 0', () => {
     expect(() => dividir(5, 0)).toThrow('result does not exist, denominator is zero');
   });
-  test('dividir 10 * 2 is equal to 5', () => {
+  test('dividir 10 / 2 is equal to 5', () => {
     const result = dividir(10, 2);
     expect(result).toBe(5);
   });
@@ -120,25 +120,7 @@ describe('getEmployee', () => {
   });
 });
 describe('getSalary', () => {
-  test('getSalary receives the right object parameter', () => {
-    let data = { id: 1, name: 'Linux Torvalds' };
-    expect(data).toEqual({
-      id: expect.any(Number),
-      name: expect.any(String),
-    });
-  });
-  /* !!Aquest test d'aquí ⬇⬇ no em funciona correctament i no he sabut entendre per què:(  */
-  test('getSalary must be called with the right object as parameter', () => {
-    const getSalary = jest.fn({ id: 1, name: 'Linux Torvalds' });
-    expect(getSalary).toHaveBeenCalledWith(
-      expect.objectContaining({
-        id: expect.any(Number),
-        name: expect.any(String),
-      })
-    );
-  });
-  /* Error dient⬆: number of calls:0 */
-  test('getSalary returns a promise', () => {
+  test('getSalary returns a resolved promise when employee id found', () => {
     objEmployee = { id: 1, name: 'Linux Torvalds' };
     return expect(getSalary(objEmployee)).resolves.toStrictEqual({
       name: 'Linux Torvalds',

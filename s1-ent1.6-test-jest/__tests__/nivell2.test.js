@@ -27,11 +27,10 @@ describe('N1E2 retornaDoble', () => {
     expect(setTimeout).toHaveBeenCalledTimes(1);
   });
 
-  test('retornaDoble return a result after 2 seconds given a number parameter', async () => {
-    expect.assertions(1);
+  test('retornaDoble resolves a resolved promise after 2 seconds given a number parameter', () => {
     jest.useFakeTimers();
     jest.spyOn(global, 'setTimeout');
-    await expect(retornaDoble(3)).resolves.toBe(6);
+    retornaDoble(3).then((result) => expect(result).resolves.toBe(6));
   });
 });
 

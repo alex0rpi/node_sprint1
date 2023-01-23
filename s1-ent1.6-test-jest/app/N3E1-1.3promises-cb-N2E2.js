@@ -1,10 +1,14 @@
-/* Modifico les dues funcions per a què llegeixin el fitxer json i assignin
-els employees o salaries a una variable */
+/* Modifico les dues funcions per tal què:
+--> llegeixin el fitxer json i assignin la data a una variable.
+--> validin l'argument rebut
+*/
 
 const fs = require('fs');
 
 const getEmployee = (id) => {
-  const json = fs.readFileSync('./N3E1-dades.json');
+  if (!id || typeof id !== 'number') throw new Error('Argument must be of type number');
+  // Accés a dades del fitxer .json
+  const json = fs.readFileSync('./data.json');
   const employees = JSON.parse(json).employees;
   let promesa = new Promise((resolve, reject) => {
     for (let i in employees) {
@@ -23,7 +27,8 @@ getEmployee(2)
   .catch((error) => console.log(error));
 
 const getSalary = (objEmployee) => {
-  const json = fs.readFileSync('./N3E1-dades.json');
+  // Accés a dades del fitxer .json
+  const json = fs.readFileSync('./data.json');
   const salaries = JSON.parse(json).salaries;
   let laPromesa = new Promise((resolve, reject) => {
     for (let i in salaries) {
