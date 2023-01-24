@@ -18,13 +18,12 @@ Abans de començar
 }
 
 ```
-
-Al package.json introduir el següent script:
+Al package.json introduir el següent script, si no hi és ja:
 
 ```
   "scripts": {
-    // "test": "jest --watchAll --verbose --coverage"
-    O BÉ sense els flags
-    // "test": "jest"
+    "test": "jest --verbose"
+    O BÉ amb tots els flags ↓↓ , però dona una informació extra que no comprenc del tot.
+    //"test": "jest --watchAll --verbose --coverage"
   },
 ```
