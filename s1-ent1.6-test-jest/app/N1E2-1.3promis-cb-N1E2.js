@@ -7,14 +7,18 @@ const funcioParamCb = (param, cb) => {
   if (!cb || typeof cb !== 'function')
     throw new Error('A callback function must be passed in');
   if (param) {
-    cb('Habemus papam');
+    return cb('Habemus papam');
   } else {
-    cb('Non habemus papam');
+    return cb('Non habemus papam');
   }
 };
+
 function cb(x) {
   if (typeof x !== 'string') throw new Error('cb function received invalid data');
-  console.log(x)
+  console.log(x);
+  return x;
 }
+
+funcioParamCb(true, cb);
 
 module.exports = { funcioParamCb, cb };

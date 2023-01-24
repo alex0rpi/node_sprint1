@@ -51,7 +51,7 @@ describe('dividir', () => {
     expect(() => dividir(2, null)).toThrow('input data missing (undefined)');
   });
   test('dividir throws error if one param is NaN', () => {
-    expect(() => dividir('a', 9)).toThrow('invalid input data');
+    expect(() => dividir('a', [9])).toThrow('invalid input data');
   });
   test('dividir throws error if BOTH params are 0', () => {
     expect(() => dividir(0, 0)).toThrow('result is undetermined');
@@ -92,6 +92,16 @@ describe('callback - (cb)', () => {
     expect(() => cb(2).toThrow('cb function received invalid data'));
     expect(() => cb(true).toThrow('cb function received invalid data'));
   });
+  test('cb logs a string if given a string param', () => {
+    let string = 'habemus papam';
+    expect(cb(string)).toBe(string);
+  });
+  test('funcioParamCb returns "Habemus papam" if given true', () => {
+    expect(funcioParamCb(true, cb)).toBe('Habemus papam');
+  });
+  test('funcioParamCb returns "Non habemus papam" if given false', () => {
+    expect(funcioParamCb(false, cb)).toBe('Non habemus papam');
+  });
 });
 
 /*PUNT-3. Crea els tests corresponents per verificar el funcionament de les funcions de l'exercici
@@ -115,8 +125,6 @@ describe('getEmployee', () => {
     return expect(getEmployee(id)).rejects.toStrictEqual({
       message: 'Employee not found',
     });
-    /* Alternativa ⬇ */
-    // return getEmployee(id).catch((err) => expect(err).not.toBeNull());
   });
 });
 describe('getSalary', () => {

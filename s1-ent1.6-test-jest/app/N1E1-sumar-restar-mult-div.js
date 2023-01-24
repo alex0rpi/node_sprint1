@@ -23,7 +23,6 @@ exports.dividir = function dividir(a, b) {
   if (isNaN(a || b)) throw new Error('invalid input data');
   return a / b;
 }
-
 // module.exports = {
 //   sumar,
 //   restar,

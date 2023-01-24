@@ -18,4 +18,6 @@ const asyncf1 = async () => {
   console.log(result);
 };
 
+// asyncf1()
+
 module.exports = { asyncf1, asyncf2 };
