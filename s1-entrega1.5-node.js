@@ -104,7 +104,8 @@ així, amb el .exec s'executa un shell amb una comanda de windows: dir  */
 /* spawn(), fork(), exec(), execFile() --> methods to create a child process in Node.*/
 /*child_process.exec(): spawns a shell and runs a command within that shell, passing 
     the stdout and stderr to a callback function when complete.*/
-child_process.exec('dir C:\\Users\\formacio', function (error, stdout, stderr) {
+// child_process.exec('dir C:\\Users\\formacio', function (error, stdout, stderr) {
+child_process.exec('ls ' + directory, function (error, stdout, stderr) {
   if (error) {
     console.log(`exec error: ${error}`);
     return;
