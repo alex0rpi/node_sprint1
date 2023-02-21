@@ -43,10 +43,7 @@ const getSalary = (objEmployee) => {
   return new Promise((resolve, reject) => {
     for (let i in salaries) {
       if (salaries[i].id === objEmployee.id) {
-        resolve({
-          name: objEmployee.name,
-          salary: salaries[i].salary,
-        });
+        resolve(salaries[i]);
         return;
       }
     }
@@ -56,9 +53,14 @@ const getSalary = (objEmployee) => {
 };
 
 const funcioAsync = async (idEmpleat) => {
-  const { id, name } = await getEmployee(idEmpleat);
-  const { salary } = await getSalary({ id, name });
-  console.log({ name, salary });
+  try {
+    const { id, name } = await getEmployee(idEmpleat);
+    const { salary } = await getSalary({ id, name });
+    console.log({ name, salary });
+  } catch (error) {
+    console.log('Something went wront with funcioAsync');
+  }
+  // Afegit bloc try-catch
 };
 funcioAsync(3);
 
@@ -78,11 +80,16 @@ const asyncf2 = () => {
 };
 
 const asyncf1 = async () => {
-  const result = await asyncf2();
-  console.log(result);
+  try {
+    const result = await asyncf2();
+    console.log(result);
+  } catch (error) {
+    console.log('Error, something went wrong.');
+  }
+  // Afegit try-catch
 };
 // Descomentar línia següent ⬇⬇
-// asyncf1();
+asyncf1();
 
 // *##### Nivell 2 #####
 // !Ex1
@@ -91,9 +98,8 @@ const asyncf1 = async () => {
 const retornaDoble = (num) => {
   let promesa = new Promise((resolve, reject) => {
     if (!num || typeof num !== 'number') {
-      reject(
-        console.log('REJECTED: Error, parameter(s) either missing or not of type number')
-      );
+      reject('REJECTED: Error, parameter(s) either missing or not of type number');
+      // Eliminat el console.log previ que hi havia dins del reject.
       return;
     }
     setTimeout(() => {
@@ -112,12 +118,17 @@ la funció anterior. */
 const suma3 = async (num1, num2, num3) => {
   // la funció retornaDoble() només accepta UN sol número per crida.
   // retornaDoble() retorna una promesa, la resolució de la qual l'esperem mitjançant "await".
-  const resultat =
-    (await retornaDoble(num1)) + (await retornaDoble(num2)) + (await retornaDoble(num3));
-  console.log(`Result is ${resultat}`);
+  try {
+    const resultat =
+      (await retornaDoble(num1)) + (await retornaDoble(num2)) + (await retornaDoble(num3));
+    console.log(`Result is ${resultat}`);
+  } catch (error) {
+    console.log('Something went wrong');
+  }
+  // Afegit un try-catch
 };
 // Descomentar línia següent ⬇⬇
-// suma3(1, 2, 3);
+suma3(1, 2, 3);
 
 // *------------------------------------------------------------------------------------------
 // *##### Nivell 3 #####
@@ -154,9 +165,7 @@ la funció anterior. */
 const suma3again = async (num1, num2, num3) => {
   try {
     const resultat =
-      (await retornaDoble(num1)) +
-      (await retornaDoble(num2)) +
-      (await retornaDoble(num3));
+      (await retornaDoble(num1)) + (await retornaDoble(num2)) + (await retornaDoble(num3));
     console.log(`Result is ${resultat}`);
   } catch (error) {
     console.log(`Error catched: ${error}`);
