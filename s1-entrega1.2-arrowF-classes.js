@@ -59,11 +59,6 @@ class Person {
 
 /* Solució mitjançant prototips */
 const funcioCreateObjects = (name) => {
-  // Objecte que contindrà les propietats que volem assignar al prototip.
-  const objecte = {
-    constructor: Person,
-  };
-  Person.prototype = objecte;
   /* Assigno la propietat prototype de Person al nou objecte creat, que incorpora la propietat 
   constructor que defineix quin ha de ser el "blueprint" per crear futures instàncies */
   const newIndividu = Object.create(Person.prototype);
