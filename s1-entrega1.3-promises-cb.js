@@ -76,17 +76,13 @@ const getSalary = (objEmployee) => {
   let laPromesa = new Promise((resolve, reject) => {
     for (let i in salaries) {
       if (salaries[i].id === objEmployee.id) {
-        resolve({
-          name: objEmployee.name,
-          salary: salaries[i].salary,
-        });
+        resolve(salaries[i]); // retorno exclussivament l'objecte salary
       }
     }
     reject({ message: 'Salary not found' });
   });
   return laPromesa;
 };
-
 getSalary({ id: 2, name: 'Bill Gates' })
   .then((result) => console.log(result))
   .catch((error) => console.log(error));
@@ -95,9 +91,9 @@ getSalary({ id: 2, name: 'Bill Gates' })
 /* Invoca la primera funció getEmployee() i després getSalary() niant l'execució de les dues promises de 
 manera que es retorni per la consola el nom de l'empleat/da i el seu salari. */
 let ident = 2;
-getEmployee(ident).then((result) => {
-  getSalary(result).then((result) => {
-    console.log(`El nom és ${result.name} i salari de ${result.salary}`);
+getEmployee(ident).then((employeeObj) => {
+  getSalary(employeeObj).then((salaryObj) => {
+    console.log(`El nom és ${employeeObj.name} i salari de ${salaryObj.salary}`);
   });
 });
 
@@ -105,11 +101,11 @@ getEmployee(ident).then((result) => {
 // Ex1
 /* Fixa un element catch a la invocació del nivell anterior que capturi qualsevol error i el 
 mostri per la consola. */
-let id = 7;
+let id = 3;
 getEmployee(id)
-  .then((result) => {
-    getSalary(result).then((result) => {
-      console.log(`El nom és ${result.name} i salari de ${result.salary}`);
+  .then((employeeObj) => {
+    getSalary(employeeObj).then((salaryObj) => {
+      console.log(`El nom és ${employeeObj.name} i salari de ${salaryObj.salary}`);
     });
   })
   .catch((error) => console.log(error));
