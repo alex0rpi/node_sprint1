@@ -99,8 +99,7 @@ fs.readdir(directory, (err, files) => {
   if (err) console.log(err);
 });
 
-/* Amb node child processes només ho he sapigut fer suposant que estem a windows ↓↓
-així, amb el .exec s'executa un shell amb una comanda de windows: dir  */
+
 /* spawn(), fork(), exec(), execFile() --> methods to create a child process in Node.*/
 /*child_process.exec(): spawns a shell and runs a command within that shell, passing 
     the stdout and stderr to a callback function when complete.*/

@@ -62,7 +62,7 @@ const funcioAsync = async (idEmpleat) => {
   }
   // Afegit bloc try-catch
 };
-funcioAsync(3);
+// funcioAsync(3);
 
 // !Ex2
 /* Crea una nova funció asíncrona que cridi a una altra (funció) que retorni una Promise que efectuï

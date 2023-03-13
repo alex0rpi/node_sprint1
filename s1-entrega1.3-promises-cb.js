@@ -83,7 +83,7 @@ const getSalary = (objEmployee) => {
   });
   return laPromesa;
 };
-getSalary({ id: 2, name: 'Bill Gates' })
+getSalary({ id: 4, name: 'Bill Gates' })
   .then((result) => console.log(result))
   .catch((error) => console.log(error));
 
